@@ -5,7 +5,7 @@ const { Sequelize, DataTypes } = require('sequelize');
 
 // Database connection
 const sequelize = new Sequelize(
-  process.env.DATABASE_URL || 'postgres://postgres:pass@localhost:5432/pricelist_app',
+  process.env.DATABASE_URL || 'postgresql://pricelist_db_user:Agz9i9yqW0WFFfgCEofF0EhhOrIsIr7A@dpg-d0jisqidbo4c73dg0300-a/pricelist_db',
   {
     dialect: 'postgres',
     logging: msg => fastify.log.info(msg)
