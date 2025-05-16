@@ -167,9 +167,18 @@ const start = async () => {
     fastify.log.info('Database synchronized');
 
     // Seed only if not in production and DB is empty
-    if (process.env.NODE_ENV !== 'production' && (await Product.count()) === 0) {
+    if ((await Product.count()) === 0) {
       await seedDatabase();
     }
+
+    const port = process.env.PORT || 3001;
+    await fastify.listen({ port, host: '0.0.0.0' });
+    fastify.log.info(`Server running on http://localhost:${port}`);
+  } catch (err) {
+    fastify.log.error(err);
+    process.exit(1);
+  }
+};
 
     const port = process.env.PORT || 3001;
     await fastify.listen({ port, host: '0.0.0.0' });
