@@ -162,23 +162,12 @@ const start = async () => {
     await sequelize.authenticate();
     fastify.log.info('Database connection established');
 
-    // Sync database - force: true only in development
     await sequelize.sync({ force: process.env.NODE_ENV !== 'production' });
     fastify.log.info('Database synchronized');
 
-    // Seed only if not in production and DB is empty
     if ((await Product.count()) === 0) {
       await seedDatabase();
     }
-
-    const port = process.env.PORT || 3001;
-    await fastify.listen({ port, host: '0.0.0.0' });
-    fastify.log.info(`Server running on http://localhost:${port}`);
-  } catch (err) {
-    fastify.log.error(err);
-    process.exit(1);
-  }
-};
 
     const port = process.env.PORT || 3001;
     await fastify.listen({ port, host: '0.0.0.0' });
@@ -197,4 +186,5 @@ process.on('SIGINT', async () => {
   process.exit(0);
 });
 
+// Call start() without await at top-level
 start();
